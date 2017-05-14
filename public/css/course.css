@@ -1,0 +1,26 @@
+html, body {
+    background-color: #fff;
+    color: #414B56;
+    font-weight: 100;
+    font-size: 20px;
+    height: 100vh;
+    margin: 0;
+}
+.container{
+  width:100%;
+}
+.navbar-brand{
+  font-size: 25px;
+  color: #123456;
+}
+h2 {
+  color: #4A86E8;
+  font-size: 40px;
+}
+#cancel {
+  padding: 10px 15%;
+}
+#sign-up {
+  margin-left: 5%;
+  padding: 10px 15%;
+}
