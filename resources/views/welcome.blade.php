@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="HandheldFriendly" content="true">
@@ -25,7 +27,7 @@
           <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
           <a href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
           <a href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-          <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">EDIT</a>
+          <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
         </div>
       <div zclass="w3-main" id="main">
         <div class="w3-card-4">
@@ -54,7 +56,6 @@
           </div>
         </div>
       </div>
-      <div id="wait" style="display:none;" class="loader"></div>
       <div class="w3-container">
         <div class="w3-card-4 w3-light-green">
           <p class="w3-xlarge">&nbsp;Summary of Course</p>
@@ -76,11 +77,6 @@
       </div>
       <div class="w3-container">
         <div id="result_table"></div><br><br>
-      </div>
-      <div class="w3-container">
-        <div class="w3-center">
-          <button class="w3-btn w3-green w3-large" id="recommend_button" > RECOMMEND </button>
-        </div>
       </div>
     </body>
 </html>

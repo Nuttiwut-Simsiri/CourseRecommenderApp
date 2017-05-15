@@ -4,7 +4,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
 
         <title>Course Recomender Appication :: Welcome !</title>
 
@@ -16,20 +16,26 @@
         <style>
 
         @media only screen and (max-width: 800px) {
-        	#unseen table td:nth-child(2),
-        	#unseen table th:nth-child(2) {display: none;}
+        	#unseen table td:nth-child(1),
+        	#unseen table th:nth-child(1) {display: none;}
         }
 
         @media only screen and (max-width: 640px) {
-        	#unseen table td:nth-child(2),
-        	#unseen table th:nth-child(2){
+        	#unseen table td:nth-child(1),
+        	#unseen table th:nth-child(1){
             display: none;
           }
         }
         </style>
         <script>
         function w3_open() {
-            document.getElementById("mySidebar").style.display = "block";
+          var x = document.getElementById("mySidebar")
+          if (x.style.display === 'none') {
+               x.style.display = 'block';
+           } else {
+               x.style.display = 'none';
+           }
+
         }
         function w3_close() {
             document.getElementById("mySidebar").style.display = "none";
@@ -157,7 +163,7 @@
         <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
         <a href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
         <a href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-        <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">EDIT</a>
+        <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
       </div>
 
       <div class="w3-card-4">

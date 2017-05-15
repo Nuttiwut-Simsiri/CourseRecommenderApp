@@ -1,10 +1,15 @@
 function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
+  var x = document.getElementById("mySidebar")
+  if (x.style.display === 'none') {
+       x.style.display = 'block';
+   } else {
+       x.style.display = 'none';
+   }
+
 }
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
 }
-
 function create_table(data){
   var string ="";
   var rating2grade = {'4':'A','3.5':'B+','3' : 'B','2.5':'C+','2' :'C','1.5':'D+','1' :'D','0' :'F'};
@@ -38,8 +43,7 @@ function fetch_data()
          var start="";
          start +=
          `
-         <h3> Summary of Course  </h3>
-         class="w3-table-all" id="no-more-tables">
+         <table class="w3-table-all" id="no-more-tables">
            <thead>
              <tr>
                <th>  #          </th>
@@ -68,7 +72,7 @@ $(document).on('click', '#btn_remove', function(){
   if(confirm("Are you sure you want to remove this course?"))
   {
     $.ajax({
-         url:"/remove_course",
+         url:"welcome",
          type:"POST",
          data:{_token: CSRF_TOKEN, course_id: course_array[0],course_name: course_array[1]},
          dataType:"json",
@@ -79,12 +83,11 @@ $(document).on('click', '#btn_remove', function(){
          },
          error: function (data) {
              console.log(data);
-             $("#status").html(data);
          }
     })
  }else{
    $(this).show();
-}
+ }
 });
 $(window).on('resize', function() {
   var win = $(this);
@@ -92,67 +95,4 @@ $(window).on('resize', function() {
     $('#info').remove('w3-display-top w3-padding');
     $('#info').addClass('w3-display-right w3-padding');
   }
-});
-$(document).ready(function () {
-  //$("#result_table").append('<image id="pic" img src="/img/recommend-img.jpg" height="240" width="216" ></image><br><br>');
-  $('#recommend_button').click(function(){
-    $(document).ajaxStart(function(){
-        $("#wait").css("display", "block");
-        $("#result_table").append('<p id="process"> Processing your Recommendation </p>');
-    });
-    $(document).ajaxComplete(function(){
-        $("#wait").css("display", "none");
-    });
-    $("#result_table" ).empty();
-    $("#old_course_table" ).empty();
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
-        type: 'POST',
-        url: 'welcome',
-        data: {_token: CSRF_TOKEN},
-        success: function(data) {
-            var myObj = JSON.parse(data);
-            console.log(myObj);
-            var start="";
-            start +=
-            `
-            <table class="w3-table-all">
-              <thead>
-                <tr>
-                  <th>Ranking</th>
-                  <th>Course name</th>
-                  <th>Grade</th>
-                </tr>
-              </thead>
-                <tbody>
-            `;
-
-            var table_string = start + create_table(myObj);
-            $("#result_table" ).empty();
-            $("#result_table").append(table_string);
-
-        },
-        error: function (jqXHR, exception) {
-             var msg = '';
-             if (jqXHR.status === 0) {
-                 msg = 'Not connect.\n Verify Network.';
-             } else if (jqXHR.status == 404) {
-                 msg = 'Requested page not found. [404]';
-             } else if (jqXHR.status == 500) {
-                 msg = 'Internal Server Error [500].';
-             } else if (exception === 'parsererror') {
-                 msg = 'Requested JSON parse failed.';
-             } else if (exception === 'timeout') {
-                 msg = 'Time out error.';
-             } else if (exception === 'abort') {
-                 msg = 'Ajax request aborted.';
-             } else {
-                 msg = 'Uncaught Error.\n' + jqXHR.responseText;
-             }
-             $("#result_table").empty();
-             $("#result_table").html(msg);
-         },
-    }); // End Ajax
-  }); // End onclick
-
 });

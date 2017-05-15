@@ -167,7 +167,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Welcome to Recommender system')
     parser.add_argument('Active_user',type=int,help='Insert id of user to recommend :')
     args = parser.parse_args()
-    active_user = int(args.Active_user)-1
+    active_user = int(args.Active_user)
     myDataset_course = create_finally_dataset()
 
 
@@ -177,8 +177,8 @@ if __name__ == '__main__':
     recsys_item = ItemBasedRecommender(model, similarity_item, neighborhood_item, with_preference=True)
     recommend_top_5_item  = recsys_item.recommended_because(active_user,2,how_many=5)
     recommend_list_item = recsys_item.recommend(active_user,how_many=5)
-    print(recommend_list_to_json(recommend_top_5_item))
-    #print("Rec List item: "+recommend_list_to_json(recommend_list_item))
+    #print("Item : " +recommend_list_to_json(recommend_top_5_item))
+    print(recommend_list_to_json(recommend_list_item))
 
     model = MatrixPreferenceDataModel(myDataset_course['data'])
     similarity_user = UserSimilarity(model, pearson_correlation)
@@ -187,4 +187,4 @@ if __name__ == '__main__':
     recommend_top_5_user = recsys_user.recommended_because(active_user,2,how_many=5)
     recommend_list_user = recsys_user.recommend(active_user,how_many=5)
     #print("Top 5 user: "+recommend_list_to_json(recommend_top_5_user))
-    #print("Rec List  user: "+recommend_list_to_json(recommend_list_user))
+    print(recommend_list_to_json(recommend_list_user))

@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
+      <meta name="csrf-token" content="{{ csrf_token() }}" />
+      <meta charset="utf-8">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
         <script src="../js/jquery-3.2.0.min.js"></script>
+        <script src="../js/recommend.js"></script>
         <link rel="stylesheet" href="../css/course.css">
         <link rel="stylesheet" href="css/w3.css">
     </head>
   <script>
   function w3_open() {
-      document.getElementById("mySidebar").style.display = "block";
+    var x = document.getElementById("mySidebar")
+    if (x.style.display === 'none') {
+         x.style.display = 'block';
+     } else {
+         x.style.display = 'none';
+     }
+
   }
   function w3_close() {
       document.getElementById("mySidebar").style.display = "none";
@@ -30,7 +39,7 @@
         <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
         <a href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
         <a href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-        <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">EDIT</a>
+        <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
       </div>
     <div zclass="w3-main" id="main">
       <div class="w3-card-4">
@@ -46,6 +55,30 @@
       </div>
     </div>
     <div class="w3-container">
-      <h2>Edit your Profile</h2><br>
+      <div class="w3-card-4 w3-green">
+        <div class="w3-margin-left">
+          <h2>RECOMMENDER APPLICATION :</h2>
+          <p>We recommended you with Cosine similarity and K-NN withMean prediction algorithm .User based ,Item based and Hybrid Recommender</p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div id="wait" style="display:none;" class="loader"></div>
+    <div class="w3-container">
+      <div class="w3-card-4 w3-light-green">
+          <div id="result_table"> </div>
+      </div>
+    </div>
+    <div  class="w3-container">
+      <div  class="w3-center">
+        <div id="img">
+          <img src="../img/recommend-img.jpg" style="width:15%;" >
+        </div>
+        <div class="w3-card-1">
+          <br>
+          <button class="w3-btn w3-green w3-large" id="recommend_button" > RECOMMEND </button>
+        </div>
+        <br>
+      </div>
     </div>
 </html>
