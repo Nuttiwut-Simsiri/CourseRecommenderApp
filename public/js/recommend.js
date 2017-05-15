@@ -3,8 +3,9 @@ function create_table(data){
   var tableU ="";
   tableU +=
   `
-  <p class="w3-xlarge">&nbsp;User based Recommendation</p>
-  <table class="w3-table-all">
+
+  <h4>&nbsp;User based Recommendation</h4>
+  <table id="unseen" class="w3-table-all">
     <thead>
       <tr>
         <th>Ranking</th>
@@ -15,49 +16,66 @@ function create_table(data){
       <tbody>
   `
   ;
-  var rating2grade = {'4':'A','3.5':'B+','3' : 'B','2.5':'C+','2' :'C','1.5':'D+','1' :'D','0' :'F'};
-  var j = 0;
-  for(i = 0; i < 10; i++)
-  {
+  if(data.length>= 10 ){
+    var j = 0;
+    for(i = 0; i < data.length; i++)
+    {
 
-      if(i<5){
-        string +=
+        if(i<5){
+          string +=
+            `
+              <tr>
+              <td style="width:3%" id="id">`+(i+1)+`</td>
+              <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
+              <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
+              </tr>
+            `;
+        }else if (i==5) {
+          j++;
+          string +=`</tbody></table>`;
+          tableU +=
           `
             <tr>
-            <td style="width:3%" id="id">`+(i+1)+`</td>
+            <td style="width:3%" id="id">`+(j)+`</td>
             <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
             <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
             </tr>
           `;
-      }else if (i==5) {
-        j++;
-        string +=`</tbody></table>`;
-        tableU +=
-        `
-          <tr>
-          <td style="width:3%" id="id">`+(j)+`</td>
-          <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
-          <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
-          </tr>
-        `;
-      }else{
-        j++;
-        tableU +=
-        `
-          <tr>
-          <td style="width:3%" id="id">`+(j)+`</td>
-          <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
-          <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
-          </tr>
-        `;
+        }else{
+          j++;
+          tableU +=
+          `
+            <tr>
+            <td style="width:3%" id="id">`+(j)+`</td>
+            <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
+            <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
+            </tr>
+          `;
 
-      }
+        }
 
-  }
-  tableU +=`</tbody></table><br>`;
-  var result = "";
-  result = string+tableU;
-  return result;
+    }
+    tableU +=`</tbody></table><br><br>`;
+    var result = "";
+    result = string+tableU;
+    return result;
+  }else {
+    for(i = 0; i < data.lenght; i++)
+    {
+          string +=
+            `
+              <tr>
+              <td style="width:3%" id="id">`+(i+1)+`</td>
+              <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
+              <td style="width:3%" id="course_grade">`+data[i].rating+`</td>
+              </tr>
+            `;
+
+    }
+    string +=`</tbody></table>`;
+    return string;
+
+}
 }
 
 $(document).ready(function () {
@@ -76,13 +94,14 @@ $(document).ready(function () {
         url: 'recommend',
         data: {_token: CSRF_TOKEN},
         success: function(data) {
-            var myObj = JSON.parse(data);
-            console.log(myObj);
+            var JSON_data = JSON.parse(data)
+            console.log(data);
             var start="";
             start +=
             `
-            <p class="w3-xlarge">&nbsp;Item based Recommendation</p>
-            <table class="w3-table-all">
+              <br>
+            <h4>&nbsp;Item based Recommendation</h4>
+            <table class="w3-table-all" id="unseen" >
               <thead>
                 <tr>
                   <th>Ranking</th>
@@ -93,7 +112,7 @@ $(document).ready(function () {
                 <tbody>
             `;
 
-            var table_string = start + create_table(myObj);
+            var table_string = start + create_table(JSON_data);
             $("#result_table" ).empty();
             $("#result_table").append(table_string);
 

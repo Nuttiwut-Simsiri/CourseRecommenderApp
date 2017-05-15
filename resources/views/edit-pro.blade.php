@@ -11,6 +11,23 @@
         <link rel="stylesheet" href="../css/course.css">
         <link rel="stylesheet" href="css/w3.css">
     </head>
+  <style>
+  @media only screen and (max-width: 800px) {
+    #unseen table td:nth-child(1),
+    #unseen table th:nth-child(1) {display: none;}
+  }
+
+  @media only screen and (max-width: 640px) {
+    #unseen table td:nth-child(1),
+    #unseen table td:nth-child(3),
+    #unseen table th:nth-child(1){
+      display: none;
+    }
+    #unseen table th:nth-child(3){
+      display: none;
+    }
+  }
+  </style>
   <script>
   function w3_open() {
     var x = document.getElementById("mySidebar")
@@ -62,13 +79,12 @@
         </div>
       </div>
     </div>
-    <br>
     <div id="wait" style="display:none;" class="loader"></div>
     <div class="w3-container">
-      <div class="w3-card-4 w3-light-green">
+      <div class="w3-card-4 w3-light-green w3-margin-top">
           <div id="result_table"> </div>
       </div>
-    </div>
+    </div><br>
     <div  class="w3-container">
       <div  class="w3-center">
         <div id="img">

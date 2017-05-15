@@ -133,6 +133,7 @@ class HomeController extends Controller
         $output = $process->getOutput();
         $temp_data = explode(":",$output);
         $rank = 0;
+
         for($i=0; $i< sizeof($temp_data)-1 ;$i +=2)
         {
           $newArray[$rank] = array('course_name' => $temp_data[$i], 'rating' => $temp_data[$i+1]);
