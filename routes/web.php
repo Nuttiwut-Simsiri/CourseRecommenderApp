@@ -22,11 +22,10 @@ Route::post('edit_profile', 'HomeController@edit_profile');
 Route::post('welcome', 'HomeController@recommend');
 Route::post('search', 'HomeController@query_course');
 Route::post('insert', 'HomeController@insert_course');
-Route::post('remove', 'HomeController@remove_course');
+Route::post('remove_course', 'HomeController@remove_course');
 Route::post('query', 'HomeController@query');
 
 
-Route::get('test-q', 'HomeController@query');
 Route::get('test', 'HomeController@recommend');
 Route::get('sign-up', 'UserController@render_sign_up');
 Route::get('edit_profile','HomeController@render_edit_profile');

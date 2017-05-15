@@ -14,6 +14,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 class HomeController extends Controller
 {
+
   public function render_welcome()
   {
         $rating2grade = array('4' =>'A','3.5' =>'B+','3' => 'B','2.5' =>'C+','2' =>'C','1.5' =>'D+','1' =>'D','0' =>'F');
@@ -33,7 +34,7 @@ class HomeController extends Controller
         $table .=
                   '
                   </tbody>
-                </table>
+                </table><br>
                   ';
 
         return View::make('welcome')->with('table', $table);
@@ -89,18 +90,7 @@ class HomeController extends Controller
     DB::table('user_rating')->insert($DataInsert);
     return response()->json("ADD ".$req->course_name." SUCCESSFULLY !!");
   }
-  public function remove_course(Request $req)
-  {
-    try{
-        DB::table('user_rating')->where([
-          ['student_ID', '=', Sentinel::getUser()->student_ID],
-          ['course_ID', '=', $req->course_id]])
-          ->delete();
-      } catch(\Exception $e){
-          return response()->json($e);
-      }
-      return response()->json('REMOVE '.$req->course_name.' SUCCESSFULLY !!');
-  }
+
   public function query(){
     $result = array();
     $course_list= DB::table('user_rating')->where('student_ID', '=',Sentinel::getUser()->student_ID)->get();
@@ -113,50 +103,18 @@ class HomeController extends Controller
 
     return response()->json($result,200);
   }
-  /*
-  public function insert_information(Request $req)
+  public function remove_course(Request $req)
   {
-
-      $Req_size = (sizeof($req->request)-1)/2;
-      $this->validate($req,User::$course_rules);
-      $DataInsert = array();
-      $DataUpdate = array();
-      $Datauser_rating = array();
-      $DataInsert['student_id'] = Sentinel::getUser()->student_ID;
-      for ($i = 1; $i <= $Req_size ; $i++) {
-        $rating = $req['Grade'.$i];
-        $course_ID = $req['Course'.$i];
-        $DataInsert[$course_ID] = $rating;
-        $DataUpdate[$course_ID] = $rating;
-        $Datauser_rating[$i]['student_ID'] = Sentinel::getUser()->student_ID;
-        $Datauser_rating[$i]['course_ID'] = substr($course_ID,1,strlen($course_ID)+1);
-        $Datauser_rating[$i]['rating'] = $rating;
+    try{
+        DB::table('user_rating')->where([
+          ['student_ID', '=', Sentinel::getUser()->student_ID],
+          ['course_ID', '=', $req->course_id]
+          ])->delete();
+      }catch(\Exception $e){
+          return response()->json($e);
       }
-      try{
-        $student_users = DB::table('user_item_rating')->where('student_id', '=',Sentinel::getUser()->student_ID )->pluck('id');
-        if(sizeof($student_users) == 0){
-          DB::table('user_item_rating')->insert($DataInsert);
-        }elseif(sizeof($student_users) != 0){
-          DB::table('user_item_rating')
-            ->where('student_id',Sentinel::getUser()->student_ID)
-            ->update($DataUpdate);
-        }
-
-      } catch(\Exception $e){
-        dd($e);
-        return redirect('/Add_course');
-      }catch(\Illuminate\Database\QueryException $e){
-        dd($e);
-      }
-
-      for ($i = 1; $i <= $Req_size ; $i++) {
-          DB::table('user_rating')->insert($Datauser_rating[$i]);
-      }
-      Session::flash('message', "Success add Course, Now system can create your Recommender");
-      return redirect('/welcome');
+      return response()->json('REMOVE '.$req->course_name.' SUCCESSFULLY !!');
   }
-
-*/
   public function recommend()
   {
     $student_users = DB::table('user_item_rating')->where('student_id', '=',Sentinel::getUser()->student_ID )->orderBy('id', 'asc')->pluck('id');

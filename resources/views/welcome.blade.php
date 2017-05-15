@@ -7,7 +7,8 @@
         <title>Course Recomender Appication :: Welcome !</title>
 
         <!-- scripts -->
-        <script src="js/jquery.min.js"></script>
+
+        <script src="js/jquery-3.2.0.min.js"></script>
         <script src="js/home-page.js"></script>
         <link rel="stylesheet" href="css/w3.css">
         <link rel="stylesheet" href="css/home-page.css">
@@ -39,25 +40,43 @@
           </div>
         </div>
       </div>
-        <div id="wait" style="display:none;" class="loader"></div>
-        <div class="w3-container">
-          <div class="w3-card-4">
-            <p class="w3-xlarge"> Summary of Course  </p>
-            <table  class="w3-table-all" id="no-more-tables">
-              <thead id>
-                <tr>
-                  <th>  #</th>
-                  <th>  COURSE ID   </th>
-                  <th>  COURSE NAME </th>
-                  <th>  GRADE </th>
-                  <th>  REMOVE </th>
-                </tr>
-              </thead>
-              <tbody>
-                {!!$table!!}
+      <div class="w3-container">
+        <div class="w3-display-container w3-green w3-card-4 w3-margin-top"  style="height:150px;">
+          <div class="w3-display-left w3-padding">
+            <img id="user" src="../img/user.png" >
           </div>
+          <div id="info" class="w3-display-middle w3-padding">
+            <b>Name : {{ Sentinel::getUser()->first_name}} <br></b>
+            <b>Surname : {{ Sentinel::getUser()->last_name}}</b>
+          </div>
+          <div id="date" class="w3-display-top w3-padding">
+              <p id="date"> </p>
+          </div>
+        </div>
       </div>
-      <div id="result_table" class="container"></div><br><br>
+      <div id="wait" style="display:none;" class="loader"></div>
+      <div class="w3-container">
+        <div class="w3-card-4 w3-light-green">
+          <p class="w3-xlarge">&nbsp;Summary of Course</p>
+            <div id="old_course_table">
+              <table  class="w3-table-all" id="no-more-tables">
+                <thead>
+                  <tr>
+                    <th>  #</th>
+                    <th>  COURSE ID   </th>
+                    <th>  COURSE NAME </th>
+                    <th>  GRADE </th>
+                    <th>  REMOVE </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!!$table!!}
+          </div>
+        </div>
+      </div>
+      <div class="w3-container">
+        <div id="result_table"></div><br><br>
+      </div>
       <div class="w3-container">
         <div class="w3-center">
           <button class="w3-btn w3-green w3-large" id="recommend_button" > RECOMMEND </button>

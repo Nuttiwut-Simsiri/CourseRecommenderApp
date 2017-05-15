@@ -5,17 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/w3.css" rel="stylesheet">
+    <link href="css/sign-up.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
   </head>
-  <style>
-    h2 {
-      color: #FFFFF1;
-      font-size: 40px;
-    }
-  </style>
   @if (count($errors) > 0)
      <div class="w3-panel w3-red w3-display-container">
      <span onclick="this.parentElement.style.display='none'"class="w3-button w3-red w3-large w3-display-topright">&times;</span>
@@ -27,7 +22,7 @@
      </div>
   @endif
   <div class="container">
-    <br><br><br>
+    <br>
     <div class="w3-display-container">
 	     <div class="w3-card-4">
            <div class="w3-container w3-green">

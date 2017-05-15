@@ -104,6 +104,8 @@
                       console.log('Error:', data);
                   }
               });
+          }else if(key.length ==0){
+            $("#unseen ").empty();
           }
         });
         $(document).on('click', '#btn_enroll', function(){
