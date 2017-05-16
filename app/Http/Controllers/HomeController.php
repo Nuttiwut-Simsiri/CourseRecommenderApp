@@ -129,17 +129,27 @@ class HomeController extends Controller
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
+        $result_arr = array();
+        $item_arr = array();
         $output = $process->getOutput();
         $temp_data = explode(":",$output);
         $rank = 0;
-
-        for($i=0; $i< sizeof($temp_data)-1 ;$i +=2)
+        $temp_course = explode("/",$temp_data[1]);
+        for($i=0; $i< sizeof($temp_course)-1 ;$i +=2)
         {
-          $newArray[$rank] = array('course_name' => $temp_data[$i], 'rating' => $temp_data[$i+1]);
+          $newArray_I[$rank] = array('course_name' => $temp_course[$i], 'rating' => $temp_course[$i+1]);
           $rank +=1;
         }
-        $json_data = json_encode($newArray);
+        $result_arr['ITEM'] = $newArray_I;
+        $temp_course_u = explode("/",$temp_data[3]);
+        $rank = 0;
+        for($i=0; $i< sizeof($temp_course_u)-1 ;$i +=2)
+        {
+            $newArray_U[$rank] = array('course_name' => $temp_course_u[$i], 'rating' => $temp_course_u[$i+1]);
+            $rank +=1;
+        }
+        $result_arr['USER'] = $newArray_U;
+        $json_data = json_encode($result_arr);
         return response()->json($json_data,200);
       }
   }

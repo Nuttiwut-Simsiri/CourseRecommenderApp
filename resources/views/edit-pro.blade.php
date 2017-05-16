@@ -3,13 +3,12 @@
     <head>
       <meta name="csrf-token" content="{{ csrf_token() }}" />
       <meta charset="utf-8">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-        <script src="../js/jquery-3.2.0.min.js"></script>
-        <script src="../js/recommend.js"></script>
-        <link rel="stylesheet" href="../css/course.css">
-        <link rel="stylesheet" href="css/w3.css">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+      <script src="../js/jquery-3.2.0.min.js"></script>
+      <script src="../js/recommend.js"></script>
+      <link rel="stylesheet" href="../css/course.css">
+      <link rel="stylesheet" href="css/w3.css">
     </head>
   <style>
   @media only screen and (max-width: 800px) {
@@ -19,13 +18,9 @@
 
   @media only screen and (max-width: 640px) {
     #unseen table td:nth-child(1),
-    #unseen table td:nth-child(3),
-    #unseen table th:nth-child(1){
-      display: none;
-    }
-    #unseen table th:nth-child(3){
-      display: none;
-    }
+    #unseen table th:nth-child(1) {display: none;}
+
+
   }
   </style>
   <script>
@@ -81,14 +76,14 @@
     </div>
     <div id="wait" style="display:none;" class="loader"></div>
     <div class="w3-container">
-      <div class="w3-card-4 w3-light-green w3-margin-top">
-          <div id="result_table"> </div>
+      <div class="w3-card-4 w3-light-green">
+          <div id="unseen"> </div>
       </div>
     </div><br>
     <div  class="w3-container">
       <div  class="w3-center">
         <div id="img">
-          <img src="../img/recommend-img.jpg" style="width:15%;" >
+          <img src="../img/recommend-img.jpg" id="img" style="width:20%;" >
         </div>
         <div class="w3-card-1">
           <br>
