@@ -30,9 +30,9 @@ $(window).ready(function(){
     $("#title_name").addClass('w3-medium');
 
     $("#no-more-tables").addClass('w3-small');
-
-
   }
+});
+
   function create_table(data){
     var string ="";
     var rating2grade = {'4':'A','3.5':'B+','3' : 'B','2.5':'C+','2' :'C','1.5':'D+','1' :'D','0' :'F'};
@@ -63,9 +63,14 @@ $(window).ready(function(){
          data:{_token: CSRF_TOKEN},
          success:function(data){
            var start="";
+           console.log($(window).width());
+           if($(window).width()){
+             start += '<table id="no-more-tables" class="w3-table-all w3-small" >';
+           }else{
+             start += `<table id="no-more-tables" class="w3-table-all" >`;
+           }
            start +=
            `
-           <table class="w3-table-all" id="no-more-tables">
              <thead>
                <tr>
                  <th>  #          </th>
@@ -111,4 +116,3 @@ $(window).ready(function(){
      $(this).show();
    }
   });
-});

@@ -119,6 +119,7 @@ def connect():
         conn.close()
 def create_finally_dataset():
     Database  = connect()
+    pprint(Database)
     empList_rating = []
     for emp in Database[0]:
         empDict = {
@@ -174,6 +175,7 @@ if __name__ == '__main__':
 
 
     model = MatrixPreferenceDataModel(myDataset_course['data'])
+    #print model
     similarity_item = ItemSimilarity(model, cosine_distances)
     neighborhood_item = ItemsNeighborhoodStrategy()
     recsys_item = ItemBasedRecommender(model, similarity_item, neighborhood_item, with_preference=True)
@@ -189,4 +191,4 @@ if __name__ == '__main__':
     recommend_top_5_user = recsys_user.recommended_because(active_user,2,how_many=5)
     recommend_list_user = recsys_user.recommend(active_user,how_many=5)
     #print("Top 5 user: "+recommend_list_to_json(recommend_top_5_user))
-    print   recommend_list_to_json(recommend_list_item,type="ITEM")+recommend_list_to_json(recommend_list_user,type="USER")
+    #print   recommend_list_to_json(recommend_list_item,type="ITEM")+recommend_list_to_json(recommend_list_user,type="USER")
