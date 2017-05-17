@@ -6,7 +6,7 @@ function create_table(data){
   tableU +=
   `
 
-  <h4>&nbsp;User based Recommendation</h4>
+  <p id="user-based" class="w3-large w3-text-white">&nbsp;User based Recommendation</p>
   <table id="unseen" class="w3-table-all">
     <thead>
       <tr>
@@ -49,7 +49,35 @@ function create_table(data){
     return result;
 
 }
+$(window).ready(function(){
+  if ($(window).width()  <= 400) {
+    $('#info').removeClass('w3-display-top w3-padding');
+    $('#info').addClass('w3-display-right w3-padding');
 
+    $('#hamburger').removeClass('w3-bar-item w3-button w3-xlarge w3-mobile w3-light-green w3-hover-teal');
+    $('#Project_name').removeClass('w3-bar-item w3-mobile w3-xlarge');
+    $('#user_name').removeClass('w3-bar-item w3-button w3-mobile w3-hover-teal w3-xlarge w3-right');
+    $('#log_out').removeClass('w3-bar-item w3-button w3-red w3-mobile w3-xlarge w3-hover-red  w3-right');
+
+    $('#hamburger').addClass('w3-bar-item w3-button w3-xlarge w3-mobile w3-light-green w3-hover-teal w3-medium');
+    $('#Project_name').addClass('w3-bar-item w3-mobile w3-medium');
+    $('#user_name').addClass('w3-bar-item w3-button w3-mobile w3-hover-teal w3-right w3-medium');
+    $('#log_out').addClass('w3-bar-item w3-button w3-red w3-mobile w3-hover-red w3-right w3-medium');
+
+    $('#recommend_button').removeClass('w3-large');
+    $('#recommend_button').addClass('w3-medium');
+
+    $('#unseen').addClass('w3-small');
+
+    $('#item_based').removeClass('w3-large');
+    $('#user_based').removeClass('w3-large');
+
+    $('#item_based').addClass('w3-medium');
+    $('#user_based').addClass('w3-medium');
+
+  
+  }
+});
 $(document).ready(function () {
   $('#recommend_button').click(function(){
     $(document).ajaxStart(function(){
@@ -71,7 +99,8 @@ $(document).ready(function () {
             var start="";
             start +=
             `
-            <h4>&nbsp;Item based Recommendation</h4>
+            <br>
+            <p id="item-based" class="w3-large w3-text-white">&nbsp;Item based Recommendation</p>
             <table class="w3-table-all" id="unseen" >
               <thead>
                 <tr>

@@ -9,6 +9,19 @@
     <link href="css/index-page.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+    $(window).ready(function(){
+      if ($(window).width()  <= 400) {
+        $('#des').removeClass('w3-large');
+        $('#des').addClass('w3-medium w3-text-sand');
+
+        $('#footer').addClass('w3-small');
+        $('#W').removeClass('w3-jumbo');
+        $('#W').addClass('w3-xxlarge');
+      }
+    });
+
+    </script>
     <head>
       @if (Session::has('message'))
       <div class="alert alert-success alert-dismissable">
@@ -36,12 +49,12 @@
       </div>
       <img src="../img/background-img.jpg" style="width:100%;height:100vh;">
       <div class="w3-padding w3-display-left w3-margin-left">
-        <h1> Welcome to <font color="#500F26">CRA </font> !</h1>
-        <h4>CRA is Course Recomender Application,It's new course adviser </h4>
+        <p id="W" class="w3-jumbo w3-text-black"> Welcome to <font color="#500F26">CRA </font> !</h1>
+        <p id="des" class="w3-large">CRA is Course Recomender Application,It's new course adviser </p>
         <button type="button" class="btn btn-info" onclick="location.href='/info';">Learn More</button>
       </div>
       <div class="w3-padding w3-display-bottommiddle">
-          <p>Computer Engineering ,KMUTNB </p>
+          <p id="footer">Computer Engineering ,KMUTNB </p>
       </div>
     </div>
         <div class="w3-modal" id="login-modal">

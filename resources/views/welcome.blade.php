@@ -25,17 +25,17 @@
       @endif
         <div class="w3-sidebar w3-bar-block w3-light-grey w3-animate-left" style="display:none" id="mySidebar">
           <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
-          <a href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
-          <a href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-          <a href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
+          <a id="HOME" href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
+          <a id="ADD" href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
+          <a id="REC" href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
         </div>
       <div zclass="w3-main" id="main">
         <div class="w3-card-4">
         <div class="w3-bar w3-green">
-          <button class="w3-bar-item w3-button w3-xlarge w3-mobile w3-light-green" onclick="w3_open()">&#9776;</button> &nbsp;&nbsp;<a class="w3-bar-item w3-mobile w3-xlarge">Course Recommender Application</a>
+          <button  id="hamburger" class="w3-bar-item w3-button w3-xlarge w3-mobile w3-light-green w3-hover-teal" onclick="w3_open()">&#9776;</button><a id="Project_name" class="w3-bar-item w3-mobile w3-xlarge" >Course Recommender Application</a>
               @if(Sentinel::check())
-              <a href="{{ url('/sign-out') }}" class="w3-bar-item w3-button w3-red w3-mobile w3-xlarge w3-right"> <span class="glyphicon glyphicon-log-out"></span> Log out</a>
-                <a  class="w3-bar-item w3-button w3-mobile w3-hover-teal w3-xlarge w3-right"><b>Welcome back,</b>{{ Sentinel::getUser()->first_name}} !</a>
+                <a id="log_out" href="{{ url('/sign-out') }}" class="w3-bar-item w3-button w3-red w3-mobile w3-xlarge w3-right w3-hover-red" > <span class="glyphicon glyphicon-log-out"></span> Log out</a>
+                <a id="user_name" class="w3-bar-item w3-button w3-mobile w3-hover-teal w3-xlarge w3-right" ><b>Welcome back,</b>{{ Sentinel::getUser()->first_name}} !</a>
               @else
                 <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=http://localhost:8000/">
               @endif
@@ -58,9 +58,9 @@
       </div>
       <div class="w3-container">
         <div class="w3-card-4 w3-light-green">
-          <p class="w3-xlarge">&nbsp;Summary of Course</p>
+          <p id="title_name" class="w3-xlarge">&nbsp;Summary of Course</p>
             <div id="old_course_table">
-              <table  class="w3-table-all" id="no-more-tables">
+              <table  id="no-more-tables" class="w3-table-all" >
                 <thead>
                   <tr>
                     <th>  #</th>
@@ -74,9 +74,6 @@
                   {!!$table!!}
           </div>
         </div>
-      </div>
-      <div class="w3-container">
-        <div id="result_table"></div><br><br>
       </div>
     </body>
 </html>
