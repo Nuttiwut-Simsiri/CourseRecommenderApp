@@ -32,9 +32,9 @@
       <div zclass="w3-main" id="main">
         <div class="w3-card-4">
         <div class="w3-bar w3-green">
-          <button class="w3-bar-item w3-button w3-xlarge w3-mobile w3-hover-light-green" onclick="w3_open()">&#9776;Course Recommender Application</button>
+          <button class="w3-bar-item w3-button w3-xlarge w3-mobile w3-light-green" onclick="w3_open()">&#9776;</button> &nbsp;&nbsp;<a class="w3-bar-item w3-mobile w3-xlarge">Course Recommender Application</a>
               @if(Sentinel::check())
-              <a href="{{ url('/sign-out') }}" class="w3-bar-item w3-button w3-hover-red w3-mobile w3-xlarge w3-right"> <span class="glyphicon glyphicon-log-out"></span> Log out</a>
+              <a href="{{ url('/sign-out') }}" class="w3-bar-item w3-button w3-red w3-mobile w3-xlarge w3-right"> <span class="glyphicon glyphicon-log-out"></span> Log out</a>
                 <a  class="w3-bar-item w3-button w3-mobile w3-hover-teal w3-xlarge w3-right"><b>Welcome back,</b>{{ Sentinel::getUser()->first_name}} !</a>
               @else
                 <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=http://localhost:8000/">

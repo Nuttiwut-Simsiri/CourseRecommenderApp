@@ -19,11 +19,11 @@ function create_table(data){
         string +=
           `
             <tr>
-            <td style="width:3%" id="id">`+(i+1)+`</td>
-            <td style="width:10%" id="course_id">`+data[i].course_id+`</td>
-            <td style="width:10%" id="course_name">`+data[i].course_name+`</td>
-            <td style="width:3%" id="course_grade">`+rating2grade[data[i].rating]+`</td>
-            <td style="width:10%;"><button id="btn_remove" data-id3="`+data[i].course_id+`,`+data[i].course_name+`"  class="w3-btn w3-red"> REMOVE  </button> </td>
+            <td style="width:3%" id="id" data-title="#">`+(i+1)+`</td>
+            <td style="width:10%" id="course_id" data-title="COURSE ID">`+data[i].course_id+`</td>
+            <td style="width:10%" id="course_name" data-title="COURSE NAME">`+data[i].course_name+`</td>
+            <td style="width:3%" id="course_grade" data-title="GRADE">`+rating2grade[data[i].rating]+`</td>
+            <td style="width:10%;" data-title="REMOVE"><button id="btn_remove" data-id3="`+data[i].course_id+`,`+data[i].course_name+`"  class="w3-btn w3-red"> REMOVE  </button> </td>
             </tr>
           `;
   }
