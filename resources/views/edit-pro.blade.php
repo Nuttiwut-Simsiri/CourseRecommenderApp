@@ -11,17 +11,58 @@
       <link rel="stylesheet" href="css/w3.css">
     </head>
   <style>
+  @media only screen and (max-width: 2000px) {
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+  }
   @media only screen and (max-width: 800px) {
-    #unseen table td:nth-child(1),
-    #unseen table th:nth-child(1) {display: none;}
+    #unseen table td:nth-child(3),
+    #unseen table th:nth-child(3) {display: none;}
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
   }
 
   @media only screen and (max-width: 640px) {
     #unseen table td:nth-child(3),
     #unseen table th:nth-child(3) {display: none;}
+    .loader {
+        border: 10px solid #f3f3f3; /* Light grey */
+        border-top: 10px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 90px;
+        height: 90px;
+        animation: spin 2s linear infinite;
+    }
 
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
   }
+
   </style>
   <script>
   function w3_open() {
@@ -74,14 +115,25 @@
         </div>
       </div>
     </div>
-    <div id="wait" style="display:none;" class="loader"></div>
+    <div class="w3-container">
+      <div id="loading" class="w3-display-container w3-white" style="height:250px;display:none;">
+        <div class="w3-display-middle">
+          <div id="wait" style="display:none;" class="loader"></div>
+        </div>
+        <div class="w3-display-bottommiddle">
+          <br><br><br><br>
+          <div id="process" style="display:none;" ><p id="process_text" class="w3-large" > Processing your Recommend... </p>
+        </div>
+      </div>
+    </div>
     <div class="w3-container">
       <div class="w3-card-4 w3-light-green">
-          <div id="unseen"> </div>
+          <div id="unseen"></div>
       </div>
-    </div><br>
+    </div>
     <div  class="w3-container">
       <div  class="w3-center">
+
         <div id="img">
           <img src="../img/recommend-img.jpg" id="img" style="width:20%;" >
         </div>

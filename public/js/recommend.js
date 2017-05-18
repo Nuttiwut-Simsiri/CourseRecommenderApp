@@ -75,17 +75,23 @@ $(window).ready(function(){
     $('#item_based').addClass('w3-medium');
     $('#user_based').addClass('w3-medium');
 
-  
+    $('#process_text').removeClass('w3-large');
+    $('#process_text').addClass('w3-small');
+
   }
 });
 $(document).ready(function () {
   $('#recommend_button').click(function(){
+    $("#unseen" ).empty();
     $(document).ajaxStart(function(){
         $("#wait").css("display", "block");
-        $("#result_table").append('<p id="process"> Processing your Recommendation </p>');
+        $("#process").css("display", "block");
+        $('#loading').css("display","block");
     });
     $(document).ajaxComplete(function(){
         $("#wait").css("display", "none");
+        $("#process").css("display", "none");
+        $('#loading').css("display","none");
     });
     $("#img" ).empty();
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

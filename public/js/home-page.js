@@ -14,7 +14,7 @@ function w3_close() {
 $(window).ready(function(){
   if ($(window).width()  < 450) {
     $('#info').removeClass('w3-display-top w3-padding');
-    $('#info').addClass('w3-display-right w3-padding');
+    $('#info').addClass('w3-display-right w3-small w3-margin-right w3-margin-bottom');
 
     $('#hamburger').removeClass('w3-xlarge');
     $('#Project_name').removeClass('w3-xlarge');
@@ -30,6 +30,7 @@ $(window).ready(function(){
     $("#title_name").addClass('w3-medium');
 
     $("#no-more-tables").addClass('w3-small');
+
   }
 });
 
