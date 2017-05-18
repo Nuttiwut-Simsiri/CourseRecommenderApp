@@ -119,7 +119,6 @@ def connect():
         conn.close()
 def create_finally_dataset():
     Database  = connect()
-    pprint(Database)
     empList_rating = []
     for emp in Database[0]:
         empDict = {
@@ -173,22 +172,21 @@ if __name__ == '__main__':
     active_user = int(args.Active_user)
     myDataset_course = create_finally_dataset()
 
-
     model = MatrixPreferenceDataModel(myDataset_course['data'])
-    #print model
+    #pprint(myDataset_course)
     similarity_item = ItemSimilarity(model, cosine_distances)
     neighborhood_item = ItemsNeighborhoodStrategy()
     recsys_item = ItemBasedRecommender(model, similarity_item, neighborhood_item, with_preference=True)
-    recommend_top_5_item  = recsys_item.recommended_because(active_user,7,how_many=5)
+    #recommend_top_5_item  = recsys_item.recommended_because(active_user,7,how_many=5)
     recommend_list_item = recsys_item.recommend(active_user,how_many=5)
     #print("Item : " +recommend_list_to_json(recommend_top_5_item))
 
-
     model = MatrixPreferenceDataModel(myDataset_course['data'])
-    similarity_user = UserSimilarity(model, pearson_correlation)
+    similarity_user = UserSimilarity(model, cosine_distances)
     neighborhood_user = NearestNeighborsStrategy()
     recsys_user = UserBasedRecommender(model, similarity_user, neighborhood_user,with_preference=True)
     recommend_top_5_user = recsys_user.recommended_because(active_user,2,how_many=5)
     recommend_list_user = recsys_user.recommend(active_user,how_many=5)
     #print("Top 5 user: "+recommend_list_to_json(recommend_top_5_user))
-    #print   recommend_list_to_json(recommend_list_item,type="ITEM")+recommend_list_to_json(recommend_list_user,type="USER")
+    #print(type(recommend_list_item))
+    print   recommend_list_to_json(recommend_list_item,type="ITEM")+recommend_list_to_json(recommend_list_user,type="USER")

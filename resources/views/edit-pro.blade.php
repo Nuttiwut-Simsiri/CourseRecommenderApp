@@ -17,8 +17,8 @@
   }
 
   @media only screen and (max-width: 640px) {
-    #unseen table td:nth-child(1),
-    #unseen table th:nth-child(1) {display: none;}
+    #unseen table td:nth-child(3),
+    #unseen table th:nth-child(3) {display: none;}
 
 
   }
