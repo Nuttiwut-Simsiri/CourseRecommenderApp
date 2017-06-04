@@ -1,4 +1,4 @@
-import csv,json,warnings,argparse
+import csv,json,warnings,argparse,timeit
 import numpy as np
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 warnings.simplefilter(action = "ignore", category = RuntimeWarning)
@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from pprint import pprint
 from scikits.crab import datasets
 from scikits.crab.models import MatrixPreferenceDataModel,MatrixBooleanPrefDataModel
-from scikits.crab.metrics.pairwise import cosine_distances,euclidean_distances,jaccard_coefficient,pearson_correlation
+from scikits.crab.metrics.pairwise import cosine_distances,pearson_correlation,euclidean_distances
 from scikits.crab.similarities import UserSimilarity,ItemSimilarity
 from scikits.crab.recommenders.knn import UserBasedRecommender,ItemBasedRecommender
 from scikits.crab.recommenders.knn.neighborhood_strategies import NearestNeighborsStrategy
@@ -49,7 +49,6 @@ def find_by_id_user(arg,value):
         if str(value) == str(v):
             return k
 
-
 def create_dataset_data(dataset_name,List_item,List_user):
     dataset = {} # define a dictionary
     i = 0
@@ -57,9 +56,16 @@ def create_dataset_data(dataset_name,List_item,List_user):
         i += 1
         user = find_by_id_user(List_user,line['user_id'])
         item = find_by_id_item(List_item,line['item_id'])
+
+        if user == None:
+            break
         if (user not in dataset):
             dataset[user] = {}
+
         dataset[user][item] = float(line['rating'])
+
+
+
     return dataset
 
 def create_dataset_item(dataset_name):
@@ -86,7 +92,7 @@ def create_dataset_item_name(dataset_name):
         dataset[i] = str(line['item_name'])
     return dataset
 
-def connect():
+def connect(number_training,active_user,student_ID):
 
     """ Connect to MySQL database """
     try:
@@ -96,18 +102,30 @@ def connect():
                                        password='')
         if conn.is_connected():
             cur = conn.cursor()
-            query = ("SELECT * FROM user_rating")
+
+            query = ("SELECT * FROM user_rating ")
             cur.execute(query)
             rating = cur.fetchall()
+
+
             query = ("SELECT DISTINCT course_id FROM courses ORDER BY course_id ASC")
             cur.execute(query)
             courses = cur.fetchall()
-            query = ("SELECT DISTINCT student_id FROM user_item_rating ORDER BY id ASC")
+
+
+            query = ("SELECT DISTINCT student_id FROM user_item_rating where id <= %i ORDER BY id ASC" % (number_training))
             cur.execute(query)
             users = cur.fetchall()
+
+
             query = ("SELECT DISTINCT course_name FROM courses ORDER BY course_id ASC")
             cur.execute(query)
             courses_name = cur.fetchall()
+
+
+            query = ("SELECT student_id FROM user_item_rating where student_id = %s  ORDER BY id ASC"%(student_ID))
+            cur.execute(query)
+            present_user = cur.fetchall()
             cur.close()
 
 
@@ -115,12 +133,15 @@ def connect():
         print(e)
 
     finally:
-        return rating,courses,users,courses_name
+        return rating,courses,users,courses_name,present_user
         conn.close()
-def create_finally_dataset():
-    Database  = connect()
+def create_finally_dataset(number_training,active_user,student_ID):
+    Database  = connect(number_training,active_user,student_ID)
+
+
     empList_rating = []
     for emp in Database[0]:
+
         empDict = {
             'user_id': emp[0].encode('utf-8'),
             'item_id': emp[1].encode('utf-8'),
@@ -141,6 +162,12 @@ def create_finally_dataset():
             'user_id': emp[0],
             }
         empList_user.append(empDict)
+    for emp in Database[4]:
+        empDict = {
+            'user_id': emp[0],
+            }
+        empList_user.append(empDict)
+
     empList_course_name = []
     for emp in Database[3]:
         empDict = {
@@ -154,8 +181,8 @@ def create_finally_dataset():
     items_name = create_dataset_item_name(empList_course_name)
     return Bunch(data=data, item_ids=items,
                  user_ids=users, items_name=items_name,DESCR='course recommender app')
-def recommend_list_to_json(recommend_list,type="ITEM"):
-    myDataset_course = create_finally_dataset()
+def recommend_list_to_json(recommend_list,Dataset,type="ITEM"):
+    myDataset_course = Dataset
     if type=="ITEM" :
         output_string = "ITEM:"
     elif type=="USER":
@@ -165,28 +192,50 @@ def recommend_list_to_json(recommend_list,type="ITEM"):
         output_string += "%s/%s/" % (item_name[item[0]],float(item[1]))
     return  output_string
 
+
+def find_new_user_id(Dataset,student_ID):
+    user_list = myDataset_course.user_ids
+    for key, val in user_list.iteritems():
+        if val == student_ID:
+            return key
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Welcome to Recommender system')
     parser.add_argument('Active_user',type=int,help='Insert id of user to recommend :')
+    parser.add_argument('student_ID',type=int,help='Insert student_id of user to recommend :')
     args = parser.parse_args()
     active_user = int(args.Active_user)
-    myDataset_course = create_finally_dataset()
+    student_ID = int(args.student_ID)
 
-    model = MatrixPreferenceDataModel(myDataset_course['data'])
+    #start_time = timeit.default_timer()
+    myDataset_course = create_finally_dataset(50,active_user,student_ID)
     #pprint(myDataset_course)
-    similarity_item = ItemSimilarity(model, cosine_distances)
+    new_active_user_id = find_new_user_id(myDataset_course,str(student_ID))
+    model = MatrixPreferenceDataModel(myDataset_course['data'])
+    similarity_item = ItemSimilarity(model,pearson_correlation)
     neighborhood_item = ItemsNeighborhoodStrategy()
     recsys_item = ItemBasedRecommender(model, similarity_item, neighborhood_item, with_preference=True)
-    #recommend_top_5_item  = recsys_item.recommended_because(active_user,7,how_many=5)
-    recommend_list_item = recsys_item.recommend(active_user,how_many=5)
-    #print("Item : " +recommend_list_to_json(recommend_top_5_item))
+    #recommend_top_5_item  = recsys_item.recommended_because(new_active_user_id,42,how_many=5)
+    recommend_list_item = recsys_item.recommend(new_active_user_id,how_many=5)
+    #print("Item : " +recommend_list_to_json(recommend_list_item))
+    #evaluator = CfEvaluator()
+    #test_item_a = evaluator.evaluate_on_split(recsys_item,at=4, sampling_ratings=0.5,permutation=False,cv=5)
+    #pprint(test_item_a)
+    #elapsed = timeit.default_timer() - start_time
+    #print elapsed
 
+    #start_time = timeit.default_timer()
+    myDataset_course = create_finally_dataset(150,active_user,student_ID)
+    #pprint(myDataset_course)
+    new_active_user_id = find_new_user_id(myDataset_course,str(student_ID))
     model = MatrixPreferenceDataModel(myDataset_course['data'])
-    similarity_user = UserSimilarity(model, cosine_distances)
+    similarity_user = UserSimilarity(model,cosine_distances)
     neighborhood_user = NearestNeighborsStrategy()
     recsys_user = UserBasedRecommender(model, similarity_user, neighborhood_user,with_preference=True)
-    recommend_top_5_user = recsys_user.recommended_because(active_user,2,how_many=5)
-    recommend_list_user = recsys_user.recommend(active_user,how_many=5)
-    #print("Top 5 user: "+recommend_list_to_json(recommend_top_5_user))
-    #print(type(recommend_list_item))
-    print   recommend_list_to_json(recommend_list_item,type="ITEM")+recommend_list_to_json(recommend_list_user,type="USER")
+    recommend_list_user = recsys_user.recommend(new_active_user_id,how_many=5)
+    #elapsed = timeit.default_timer() - start_time
+    #print elapsed
+    print recommend_list_to_json(recommend_list_item,myDataset_course,type="ITEM")+recommend_list_to_json(recommend_list_user,myDataset_course,type="USER")
+    #evaluator = CfEvaluator()
+    #test_user_a = evaluator.evaluate_on_split(recsys_user,at=4,sampling_ratings=0.7,permutation=False,cv=5)
+    #pprint(test_user_a)

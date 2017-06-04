@@ -65,10 +65,10 @@ $(window).ready(function(){
          success:function(data){
            var start="";
            console.log($(window).width());
-           if($(window).width()){
+           if($(window).width() <= 450){
              start += '<table id="no-more-tables" class="w3-table-all w3-small" >';
            }else{
-             start += `<table id="no-more-tables" class="w3-table-all" >`;
+             start += `<table id="no-more-tables" class="w3-table-all">`;
            }
            start +=
            `

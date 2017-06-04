@@ -27,7 +27,7 @@
           <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
           <a id="HOME" href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
           <a id="ADD" href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-          <a id="REC" href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
+          <a id="REC" href="{{ url('/recommender') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
         </div>
       <div zclass="w3-main" id="main">
         <div class="w3-card-4">
@@ -60,7 +60,7 @@
         <div class="w3-card-4 w3-light-green">
           <p id="title_name" class="w3-xlarge">&nbsp;Summary of Course</p>
             <div id="old_course_table">
-              <table  id="no-more-tables" class="w3-table-all" >
+              <table  id="no-more-tables" class="w3-table-all">
                 <thead>
                   <tr>
                     <th>  #</th>

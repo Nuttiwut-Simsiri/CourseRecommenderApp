@@ -40,9 +40,9 @@ class HomeController extends Controller
         return View::make('welcome')->with('table', $table);
 
   }
-  public function render_edit_profile()
+  public function render_recommender()
   {
-    return view('edit-pro');
+    return view('recommender');
   }
   public function render_Add_course()
   {
@@ -122,7 +122,7 @@ class HomeController extends Controller
       Session::flash('message', "Please add Course before recommended !");
       return redirect('/welcome');
     }elseif(sizeof($student_users) != 0){
-        $process = new Process('python recommender.py '.(string)$student_users[0]);
+        $process = new Process('python recommender.py '.(string)$student_users[0].' '.Sentinel::getUser()->student_ID);
         $process->run();
 
          // executes after the command finishes

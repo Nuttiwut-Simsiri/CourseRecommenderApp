@@ -90,7 +90,7 @@
 
             $('#unseen').addClass('w3-small');
 
-          
+
           }
         });
           $(document).ready(function(){
@@ -184,7 +184,7 @@
         <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
         <a id="HOME" href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
         <a id="ADD" href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-        <a id="REC" href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
+        <a id="REC" href="{{ url('/recommender') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
       </div>
 
       <div class="w3-card-4">

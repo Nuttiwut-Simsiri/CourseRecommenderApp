@@ -131,6 +131,9 @@ $(document).ready(function () {
                  msg = 'Requested page not found. [404]';
              } else if (jqXHR.status == 500) {
                  msg = 'Internal Server Error [500].';
+                 $("#error").empty();
+                 $("#error").html('Please add course before request recommender');
+                 $('#error').append('<br><a href="Add_course"> Click here</a>');
              } else if (exception === 'parsererror') {
                  msg = 'Requested JSON parse failed.';
              } else if (exception === 'timeout') {
@@ -140,8 +143,7 @@ $(document).ready(function () {
              } else {
                  msg = 'Uncaught Error.\n' + jqXHR.responseText;
              }
-             $("#result_table").empty();
-             $("#result_table").html(msg);
+
          },
     }); // End Ajax
   }); // End onclick

@@ -10,60 +10,6 @@
       <link rel="stylesheet" href="../css/course.css">
       <link rel="stylesheet" href="css/w3.css">
     </head>
-  <style>
-  @media only screen and (max-width: 2000px) {
-    .loader {
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-  }
-  @media only screen and (max-width: 800px) {
-    #unseen table td:nth-child(3),
-    #unseen table th:nth-child(3) {display: none;}
-    .loader {
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-  }
-
-  @media only screen and (max-width: 640px) {
-    #unseen table td:nth-child(3),
-    #unseen table th:nth-child(3) {display: none;}
-    .loader {
-        border: 10px solid #f3f3f3; /* Light grey */
-        border-top: 10px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 90px;
-        height: 90px;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-  }
-
-  </style>
   <script>
   function w3_open() {
     var x = document.getElementById("mySidebar")
@@ -92,7 +38,7 @@
         <button class="w3-bar-item w3-button w3-large w3-hover-red" onclick="w3_close()">Close &times;</button>
         <a id="HOME" href="{{ url('/welcome') }}" class="w3-bar-item w3-button w3-hover-teal">HOME</a>
         <a id="ADD" href="{{ url('/Add_course') }}" class="w3-bar-item w3-button w3-hover-teal">ADD COURSE</a>
-        <a id="REC" href="{{ url('/edit_profile') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
+        <a id="REC" href="{{ url('/recommender') }}" class="w3-bar-item w3-button w3-hover-teal">RECOMMEND</a>
       </div>
     <div zclass="w3-main" id="main">
       <div class="w3-card-4">
@@ -111,7 +57,7 @@
       <div class="w3-card-4 w3-green">
         <div class="w3-margin-left">
           <p id="recommend" class="w3-xlarge w3-text-white">RECOMMENDER APPLICATION :</p>
-          <p id="description"  class="w3-medium">We recommended you with Cosine similarity and K-NN withMean prediction algorithm .User based ,Item based and Hybrid Recommender</p>
+          <p id="description"  class="w3-medium">We recommended you with Cosine similarity and K-NN withMean prediction algorithm .User based and Item based</p>
         </div>
       </div>
     </div>
@@ -129,6 +75,9 @@
     <div class="w3-container">
       <div class="w3-card-4 w3-light-green">
           <div id="unseen"></div>
+      </div>
+      <div class="w3-card-4 w3-panel w3-center w3-red w3-xlarge">
+          <div id="error"></div>
       </div>
     </div>
     <div  class="w3-container">
