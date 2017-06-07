@@ -5,19 +5,34 @@ function create_table(data){
   console.log(data['USER'].length);
   tableU +=
   `
-
   <p id="user-based" class="w3-large w3-text-white">&nbsp;User based Recommendation</p>
   <table id="unseen" class="w3-table-all">
     <thead>
       <tr>
         <th>Ranking</th>
         <th>Course name</th>
-        <th>Grade</th>
+        <th>Rating</th>
       </tr>
     </thead>
       <tbody>
   `
   ;
+  if(data['ITEM'].length != 0 ){
+    string +=
+    `
+    <p id="item-based" class="w3-large w3-text-white">&nbsp;Item based Recommendation</p>
+    <table class="w3-table-all" id="unseen" >
+      <thead>
+        <tr>
+          <th>Ranking</th>
+          <th>Course name</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+        <tbody>
+    `;
+  }
+
     var j = 0;
     for(i = 0; i < data['ITEM'].length; i++)
     {
@@ -26,7 +41,7 @@ function create_table(data){
               <tr>
               <td style="width:3%" id="id">`+(i+1)+`</td>
               <td style="width:10%" id="course_name">`+data['ITEM'][i].course_name+`</td>
-              <td style="width:3%" id="course_grade">`+data['ITEM'][i].rating+`</td>
+              <td style="width:3%" id="course_grade">`+data['ITEM'][i].rating.substring(0, 4)+`</td>
               </tr>
             `;
     }
@@ -38,12 +53,12 @@ function create_table(data){
               <tr>
               <td style="width:3%" id="id">`+(i+1)+`</td>
               <td style="width:10%" id="course_name">`+data['USER'][i].course_name+`</td>
-              <td style="width:3%" id="course_grade">`+data['USER'][i].rating+`</td>
+              <td style="width:3%" id="course_grade">`+data['USER'][i].rating.substring(0, 4)+`</td>
               </tr>
             `;
     }
 
-    tableU +=`</tbody></table><br>`;
+    tableU +=`</tbody></table>`;
     var result = "";
     result = string+tableU;
     return result;
@@ -102,23 +117,7 @@ $(document).ready(function () {
         success: function(data) {
             var json = JSON.parse(data);
             console.log(json);
-            var start="";
-            start +=
-            `
-            <br>
-            <p id="item-based" class="w3-large w3-text-white">&nbsp;Item based Recommendation</p>
-            <table class="w3-table-all" id="unseen" >
-              <thead>
-                <tr>
-                  <th>Ranking</th>
-                  <th>Course name</th>
-                  <th>Grade</th>
-                </tr>
-              </thead>
-                <tbody>
-            `;
-
-            var table_string = start + create_table(json);
+            var table_string = create_table(json);
             $("#unseen" ).empty();
             $("#unseen").append(table_string);
 

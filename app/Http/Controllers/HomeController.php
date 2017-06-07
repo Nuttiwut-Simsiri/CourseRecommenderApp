@@ -137,19 +137,28 @@ class HomeController extends Controller
         $temp_data = explode(":",$output);
         $rank = 0;
         $temp_course = explode("/",$temp_data[1]);
+
         $rank2grade = array('0' =>'4.0','1' =>'3.5','2' => '3.0','3' =>'2.5','4' =>'2.0');
         for($i=0; $i< sizeof($temp_course)-1 ;$i +=2)
         {
           if ($temp_course[$i+1] == "nan") {
-            $newArray_I[$rank] = array('course_name' => $temp_course[$i], 'rating' => $rank2grade[$rank]);
-            $rank +=1;
-          }else{
-            $newArray_I[$rank] = array('course_name' => $temp_course[$i], 'rating' => $temp_course[$i+1]);
-            $rank +=1;
+              $newArray_I[$rank] = array('course_name' => $temp_course[$i], 'rating' => $rank2grade[$rank]);
+              $rank++;
+          }elseif ($temp_course[$i+1] != "nan") {
+
+              $newArray_I[$rank] = array('course_name' => $temp_course[$i], 'rating' => $temp_course[$i+1]);
+              $rank++;
           }
 
         }
-        $result_arr['ITEM'] = $newArray_I;
+
+        function build_sorter($key) {
+          return function ($a, $b) use ($key) {
+            return strcasecmp($a[$key], $b[$key]);
+          };
+        }
+        usort($newArray_I, build_sorter('rating'));
+        $result_arr['ITEM'] = array_reverse($newArray_I);
         $temp_course_u = explode("/",$temp_data[3]);
         $rank = 0;
         for($i=0; $i< sizeof($temp_course_u)-1 ;$i +=2)

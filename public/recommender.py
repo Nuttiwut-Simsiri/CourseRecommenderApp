@@ -57,8 +57,10 @@ def create_dataset_data(dataset_name,List_item,List_user):
         user = find_by_id_user(List_user,line['user_id'])
         item = find_by_id_item(List_item,line['item_id'])
 
+
         if user == None:
             break
+
         if (user not in dataset):
             dataset[user] = {}
 
@@ -137,8 +139,6 @@ def connect(number_training,active_user,student_ID):
         conn.close()
 def create_finally_dataset(number_training,active_user,student_ID):
     Database  = connect(number_training,active_user,student_ID)
-
-
     empList_rating = []
     for emp in Database[0]:
 
